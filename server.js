@@ -15,7 +15,9 @@ const init = async (port = 0) => {
 
 const initRoutes = () => {
   const userRoutes = require('./routes/user-routes')()
+  const sessionRoutes = require('./routes/session-routes')()
   app.use('/', userRoutes)
+  app.use('/', sessionRoutes)
 }
 
 const initDB = (connectionString) => {
