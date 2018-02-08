@@ -1,3 +1,3 @@
 module.exports = function () {
-    return 'local'
+    return process.env.ENV || 'local'
 }()
