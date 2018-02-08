@@ -1,7 +1,7 @@
 const server = require('./server')
-
+const config = require('./config')()
 const init = async () => {
-  await server.initDB('mongodb://localhost:27017/cursoDB')
+  await server.initDB(config.connectionString)
   server.init(8085)
 }
 

@@ -3,7 +3,8 @@ const axios = require('axios')
 const User = require('../../../models/User')
 const server = require('../../../server')
 const { DataBaseConnector } = require('../../../db')
-const DB_URL = 'mongodb://127.0.0.1:27017/dbTest'
+const config = require('../../../config')('local')
+const DB_URL = config.connectionString + '-test'
 const getAddress = () => {
   const instance = server.getInstance()
   const currentAddress = instance.address()
