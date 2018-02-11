@@ -7,27 +7,29 @@ module.exports = () => {
       const user = await User.findOne({ email })
       if (!user) {
         return res.status(404).send({
+          message: 'Email not found',
           success: false
         }) 
       }
-      if(user.validPassword(password) === true) {
-        const cookie = encrypt({
-          name: user.name,
-          email: user.email
-        })
-        console.log(cookie)
-        res.cookie('user_sid', cookie, {maxAge: 60000});
-        return res.send({
-          success: true
+      if(user.validPassword(password) === false) {
+        return res.status(400).send({
+          success: false,
+          message: 'Wrong password'
         })
       }
-      return res.status(400).send({
-        success: false
+      const cookie = encrypt({
+        name: user.name,
+        email: user.email
+      })
+      res.cookie('user_sid', cookie, {maxAge: 60000});
+      return res.send({
+        success: true
       })
     } catch (err) {
       console.log(err)
       return res.status(500).send({
-        success: false
+        success: false,
+        message: 'Something went wrong'
       })
     }
   }
