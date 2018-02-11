@@ -3,12 +3,16 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const middlewares = require('./middlewares')
 const { DataBaseConnector } = require('./db')
 let server = null
 
 const init = async (port = 0) => {
   app.use(cookieParser())
+  app.use(cors({
+    origin: '*'
+  }))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(express.static(path.resolve(__dirname, 'public')))
