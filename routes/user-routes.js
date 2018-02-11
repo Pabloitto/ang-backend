@@ -5,6 +5,6 @@ const { sessionFilter } = require('../middlewares/auth')
 module.exports = () => {
   userRouter.get('/api/users', sessionFilter, userController.fetchUsers)
   userRouter.get('/api/users/:userId', sessionFilter, userController.fetchUserById)
-  userRouter.post('/api/users', sessionFilter, userController.save)
+  userRouter.post('/api/users', userController.save)
   return userRouter
 }
