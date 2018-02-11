@@ -13,9 +13,31 @@ module.exports = () => {
     res.send({name: result.name, email: result.email})
   }
   const save = async (req, res) => {
-    const user = new User(req.body)
-    const result = await user.save()
-    res.send(result)
+    try {
+      const {
+        name,
+        email,
+        password,
+        confirmPassword
+      } = req.body
+
+      if (password === confirmPassword) {
+        const user = new User()
+        user.name = name
+        user.email = email
+        user.password = user.generateHash(password)
+        const result = await user.save()
+        res.send(result._id)
+      } else {
+        res.status(400).send({
+          error: 'Password not match'
+        })
+      }
+    } catch (err) {
+      res.status(500).send({
+        error: 'Something is wrong'
+      })
+    }
   }
   return {
     fetchUsers: fetchUsers,
