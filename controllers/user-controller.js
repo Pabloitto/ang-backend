@@ -23,6 +23,42 @@ module.exports = () => {
       })
     }
   }
+  const update = async (req, res) => {
+    try {
+      const {
+        _id,
+        name,
+        email
+      } = req.body
+      const user = await User.findOne({_id: _id})
+      if (!user) {
+        return res.status(404).send({
+          error: 'User not found'
+        })
+      }
+      console.log(user)
+      user.name = name
+      user.email = email
+      await user.save()
+      res.send({success: true})
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        error: 'Something is wrong'
+      })
+    }
+  }
+  const deleteUser = async (req, res) => {
+    try {
+      const { userId } = req.params
+      const result = await User.remove({_id: userId})
+      res.send({success: true})
+    } catch (err) {
+      res.status(500).send({
+        error: err
+      })
+    }
+  }
   const save = async (req, res) => {
     try {
       const {
@@ -53,6 +89,8 @@ module.exports = () => {
   return {
     fetchUsers: fetchUsers,
     fetchUserById: fetchUserById,
-    save: save
+    save: save,
+    update: update,
+    deleteUser: deleteUser
   }
 }
