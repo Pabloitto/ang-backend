@@ -9,7 +9,7 @@ module.exports = () => {
   }
   const fetchUserById = async (req, res) => {
     try {
-      const { userId } = req.query
+      const { userId } = req.params
       const result = await User.findOne({_id: userId})
       if (!result) {
         return res.status(404).send({
