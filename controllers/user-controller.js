@@ -8,9 +8,20 @@ module.exports = () => {
     }))
   }
   const fetchUserById = async (req, res) => {
-    const { userId } = req.query
-    const result = await User.findOne({_id: userId})
-    res.send({_id: result._id, name: result.name, email: result.email})
+    try {
+      const { userId } = req.query
+      const result = await User.findOne({_id: userId})
+      if (!result) {
+        return res.status(404).send({
+          error: 'User not found'
+        })
+      }
+      res.send({_id: result._id, name: result.name, email: result.email})
+    } catch (err) {
+      res.status(500).send({
+        error: err
+      })
+    }
   }
   const save = async (req, res) => {
     try {
