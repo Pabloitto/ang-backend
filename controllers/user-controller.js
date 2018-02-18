@@ -9,7 +9,7 @@ module.exports = () => {
   }
   const fetchUserById = async (req, res) => {
     const { userId } = req.query
-    const result = await User.findOne(userId)
+    const result = await User.findOne({_id: userId})
     res.send({name: result.name, email: result.email})
   }
   const save = async (req, res) => {
