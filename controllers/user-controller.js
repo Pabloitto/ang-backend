@@ -3,8 +3,8 @@ const User = require('../models/User')
 module.exports = () => {
   const fetchUsers = async (req, res) => {
     const result = await User.find({})
-    res.send(result.map(({name, email}) => {
-      return {name, email}
+    res.send(result.map(({_id, name, email}) => {
+      return {_id, name, email}
     }))
   }
   const fetchUserById = async (req, res) => {
